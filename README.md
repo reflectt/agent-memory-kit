@@ -1,5 +1,9 @@
 # 🧠 Agent Memory Kit
 
+[![GitHub](https://img.shields.io/badge/GitHub-reflectt-blue?logo=github)](https://github.com/reflectt/agent-memory-kit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Part of Team Reflectt](https://img.shields.io/badge/Team-Reflectt-purple)](https://github.com/reflectt)
+
 **Stop forgetting how to do things.**
 
 This kit gives AI agents a structured memory system. Born from a real incident — an agent woke up having forgotten *how* to do work it had done yesterday. The raw logs existed, but the procedural knowledge was gone.
@@ -221,11 +225,31 @@ When you wake up confused:
 
 ## Installation
 
-1. Copy `templates/` contents to your `memory/` folder
-2. Read `ARCHITECTURE.md` once to understand the system
-3. Start logging. That's it.
+### Option 1: Git Clone (Recommended)
+```bash
+# Clone into your skills folder
+git clone https://github.com/reflectt/agent-memory-kit.git skills/agent-memory-kit
+
+# Copy templates to your memory folder
+mkdir -p memory/procedures
+cp skills/agent-memory-kit/templates/* memory/
+```
+
+### Option 2: Manual Download
+1. Download the [latest release](https://github.com/reflectt/agent-memory-kit/releases)
+2. Copy `templates/` contents to your `memory/` folder
+3. Read `ARCHITECTURE.md` once to understand the system
 
 No dependencies. Just markdown files.
+
+---
+
+## Related Kits
+
+This kit works great on its own, but pairs well with:
+
+- **[Agent Autonomy Kit](https://github.com/reflectt/agent-autonomy-kit)** — Use your memory system to power autonomous work sessions
+- **[Agent Team Kit](https://github.com/reflectt/agent-team-kit)** — Coordinate multiple agents sharing a memory system
 
 ---
 
