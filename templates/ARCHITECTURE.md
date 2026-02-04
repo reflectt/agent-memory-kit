@@ -80,16 +80,48 @@ This is automatic. No action needed.
 1. Read `MEMORY.md` (semantic)
 2. Read `memory/YYYY-MM-DD.md` for today + yesterday (episodic)
 3. Check `memory/procedures/` if doing technical work (procedural)
+4. **If post-compaction:** Check `memory/context-snapshot.md` for quick re-orientation
 
 ### During Work:
 - Log significant events to daily file (include HOW!)
 - Document new procedures when figured out
 - Note failures and successes in feedback.md
+- **Monitor token usage** — flush before hitting limits
 
 ### On Rest (session end):
 - Update daily memory with summary
 - If learned something important → update MEMORY.md
 - If figured out a process → create procedure doc
+
+### Before Compaction (~160K tokens):
+1. Update `memory/context-snapshot.md`:
+   - Current focus
+   - Active decisions
+   - Running subagents
+   - Next actions
+2. Flush recent events to daily log
+3. Document new procedures
+4. Update MEMORY.md if needed
+
+---
+
+## Compaction Survival
+
+Context compactions wipe conversation history. Survive them by:
+
+**Pre-compaction flush:**
+- Capture current state in `context-snapshot.md`
+- Log recent events with HOW (daily file)
+- Document new procedures immediately
+- Update semantic memory if significant learnings
+
+**Post-compaction wake:**
+- Read `context-snapshot.md` first (fast re-orientation)
+- Then today + yesterday's daily logs
+- Check active sessions (`sessions_list`)
+- Resume from "Next Actions" in snapshot
+
+**Key insight:** Write it down before it's lost. You can't remember what's not in a file.
 
 ---
 

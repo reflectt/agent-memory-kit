@@ -184,6 +184,7 @@ The secret weapon. Track what works and what doesn't.
 1. Read semantic memory (`MEMORY.md`)
 2. Read recent episodic memory (today + yesterday's `memory/YYYY-MM-DD.md`)
 3. If doing technical work, check `memory/procedures/`
+4. **NEW:** Check `memory/context-snapshot.md` if coming back from compaction
 
 ### During Work
 - Log significant events to daily file (with HOW)
@@ -194,6 +195,41 @@ The secret weapon. Track what works and what doesn't.
 - Update daily memory with session summary
 - If learned something important → update MEMORY.md
 - If figured out a process → create procedure doc
+
+### Before Compaction (when hitting ~160K tokens)
+- **Trigger pre-compaction flush** (see Compaction Survival below)
+- Update `memory/context-snapshot.md` with current state
+- Ensure recent work is logged to daily memory
+- Document any new procedures
+
+---
+
+## Compaction Survival
+
+**New in v2:** Context compactions don't have to be painful.
+
+When you're approaching token limits (~160K/200K), trigger a structured flush:
+
+1. **Create/update** `memory/context-snapshot.md`:
+   - What am I working on?
+   - What decisions were just made?
+   - Who's running (active subagents)?
+   - What should I do when I wake up?
+
+2. **Update daily log** with recent events (include HOW)
+
+3. **Document procedures** if you figured out something new
+
+4. **Flush MEMORY.md** if major learnings today
+
+**On wake after compaction:**
+- Read `memory/context-snapshot.md` first (quick orientation)
+- Then today + yesterday's daily logs
+- Check active sessions
+- Resume work
+
+**Template:** `templates/context-snapshot-template.md`  
+**Full guide:** `templates/compaction-survival.md`
 
 ---
 

@@ -36,6 +36,9 @@ cp templates/procedure-template.md memory/procedures/
 | `templates/feedback.md` | Success/failure tracking template |
 | `templates/procedure-template.md` | How-to document template |
 | `templates/daily-template.md` | Daily log template |
+| `templates/compaction-survival.md` | **NEW:** Pre-compaction flush guide |
+| `templates/context-snapshot-template.md` | **NEW:** Quick context save template |
+| `helpers/check-compaction.sh` | **NEW:** Token limit checker |
 
 ## Key Concepts
 
