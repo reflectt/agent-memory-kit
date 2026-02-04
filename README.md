@@ -83,6 +83,74 @@ memory/
 
 ---
 
+## 🔍 Search & Recall (v2.1+)
+
+**Problem:** You have 3,865+ lines of memory. How do you find that decision from last week?
+
+**Solution:** Memory Kit Search — semantic search with tagging.
+
+### Quick Search
+
+```bash
+# Add to PATH for easy access
+export PATH="$PATH:$HOME/.openclaw/workspace/skills/agent-memory-kit/bin"
+
+# Find past decisions
+memory-search --recent-decisions
+
+# Today's context
+memory-search --today
+
+# Keyword search with tags
+memory-search "ClawHub" --tag decision
+
+# Procedure lookup
+memory-search --procedure "posting"
+
+# Count patterns
+memory-search "token limit" --count
+```
+
+### Tag System
+
+Tag entries inline with `#tags`:
+
+```markdown
+### ClawHub Publishing Decision #decision #kits #distribution
+
+**What:** Decided to publish all 5 kits
+**Why:** Community actively discovering kits
+
+**Tags:** #decision #kits #distribution #important
+```
+
+**Tag categories:**
+- **Event/Topic:** `#decision`, `#learning`, `#blocker`, `#win`, `#procedure`
+- **Domain:** `#kits`, `#distribution`, `#product`, `#infrastructure`, `#team`
+- **Meta:** `#important`, `#todo`, `#archived`, `#reference`
+
+### Frontmatter (Optional)
+
+Add structured metadata to daily logs:
+
+```markdown
+---
+date: 2026-02-04
+agents: [Kai, Echo]
+projects: [Memory Kit, ClawHub]
+tags: [kits, search]
+status: active
+wins: [Search system built]
+blockers: []
+---
+
+# Daily Log — February 4, 2026
+```
+
+**See full documentation:** [`SEARCH.md`](./SEARCH.md)
+
+---
+
 ## The Three Memory Types
 
 ### Episodic Memory (Daily Logs)

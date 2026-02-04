@@ -1,0 +1,196 @@
+#!/bin/bash
+# Memory Kit Search CLI
+# Semantic search across memory/*.md files
+
+set -euo pipefail
+
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LIB_DIR="$SCRIPT_DIR/../lib"
+
+# Source search library
+if [[ -f "$LIB_DIR/search.sh" ]]; then
+    source "$LIB_DIR/search.sh"
+else
+    echo "Error: search.sh library not found at $LIB_DIR/search.sh"
+    exit 1
+fi
+
+# Show usage
+show_usage() {
+    cat << EOF
+Memory Kit Search - Find past decisions and context
+
+USAGE:
+    memory-search [QUERY] [OPTIONS]
+
+ARGUMENTS:
+    QUERY              Keyword or phrase to search for
+
+OPTIONS:
+    --tag TAG          Filter by tag (repeatable)
+    --project PROJECT  Filter by project name
+    --agent AGENT      Filter by agent name
+    --since DATE       Results since date (YYYY-MM-DD or relative: 7d, 2w, 1m)
+    --until DATE       Results until date (YYYY-MM-DD)
+    --context N        Show N lines before/after match (default: 3)
+    --format FORMAT    Output format: text (default), json
+    --count            Count occurrences, don't show full results
+    --procedure        Search procedures only
+    
+SHORTCUTS:
+    --today                  Today's activity
+    --recent-decisions       Recent decisions (last 7 days)
+    --recent-wins            Recent wins (last 7 days)
+    --active-blockers        Active blockers
+    
+EXAMPLES:
+    # Basic keyword search
+    memory-search "token limit"
+    
+    # Search with tag filter
+    memory-search "ClawHub" --tag decision
+    
+    # Multiple tags
+    memory-search --tag kits --tag distribution
+    
+    # Date range
+    memory-search "authentication" --since 7d
+    memory-search "launch" --since 2026-02-01 --until 2026-02-03
+    
+    # Procedure search
+    memory-search --procedure "posting"
+    
+    # Count occurrences
+    memory-search "compaction" --count
+    
+    # Quick shortcuts
+    memory-search --today
+    memory-search --recent-decisions
+    memory-search --active-blockers
+
+MORE INFO:
+    See skills/agent-memory-kit/SEARCH.md for detailed documentation
+
+EOF
+}
+
+# Parse arguments
+QUERY=""
+FILTER_TAGS=""
+FILTER_PROJECT=""
+FILTER_AGENT=""
+SINCE=""
+UNTIL=""
+CONTEXT_LINES=3
+FORMAT="text"
+COUNT_MODE=0
+PROCEDURE_ONLY=0
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --help|-h)
+            show_usage
+            exit 0
+            ;;
+        --tag)
+            shift
+            if [[ -n "$FILTER_TAGS" ]]; then
+                FILTER_TAGS="$FILTER_TAGS $1"
+            else
+                FILTER_TAGS="$1"
+            fi
+            shift
+            ;;
+        --project)
+            shift
+            FILTER_PROJECT="$1"
+            shift
+            ;;
+        --agent)
+            shift
+            FILTER_AGENT="$1"
+            shift
+            ;;
+        --since)
+            shift
+            SINCE="$1"
+            shift
+            ;;
+        --until)
+            shift
+            UNTIL="$1"
+            shift
+            ;;
+        --context)
+            shift
+            CONTEXT_LINES="$1"
+            shift
+            ;;
+        --format)
+            shift
+            FORMAT="$1"
+            shift
+            ;;
+        --count)
+            COUNT_MODE=1
+            shift
+            ;;
+        --procedure)
+            PROCEDURE_ONLY=1
+            if [[ $# -gt 1 ]] && [[ ! "$2" =~ ^-- ]]; then
+                shift
+                QUERY="$1"
+            fi
+            shift
+            ;;
+        --today)
+            SINCE="0d"
+            shift
+            ;;
+        --recent-decisions)
+            FILTER_TAGS="decision"
+            SINCE="7d"
+            shift
+            ;;
+        --recent-wins)
+            FILTER_TAGS="win"
+            SINCE="7d"
+            shift
+            ;;
+        --active-blockers)
+            FILTER_TAGS="blocker"
+            shift
+            ;;
+        --*)
+            echo "Unknown option: $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+        *)
+            # Treat as query
+            if [[ -z "$QUERY" ]]; then
+                QUERY="$1"
+            else
+                QUERY="$QUERY $1"
+            fi
+            shift
+            ;;
+    esac
+done
+
+# Validate
+if [[ -z "$QUERY" ]] && [[ -z "$FILTER_TAGS" ]] && [[ -z "$FILTER_PROJECT" ]] && [[ -z "$FILTER_AGENT" ]]; then
+    if [[ "$COUNT_MODE" -eq 1 ]]; then
+        echo "Error: --count requires a query"
+        exit 1
+    fi
+    # Allow empty query if we have filters
+fi
+
+# Execute search
+if [[ "$COUNT_MODE" -eq 1 ]]; then
+    count_occurrences "$QUERY" "$SINCE" "$UNTIL"
+else
+    search_memory "$QUERY" "$FILTER_TAGS" "$FILTER_PROJECT" "$FILTER_AGENT" "$SINCE" "$UNTIL" "$CONTEXT_LINES" "$PROCEDURE_ONLY" "$FORMAT"
+fi
