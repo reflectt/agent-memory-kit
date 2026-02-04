@@ -268,13 +268,16 @@ search_memory() {
     done
     
     # Sort by score (descending)
-    local sorted_results=($(printf '%s\n' "${results[@]}" | sort -t'|' -k1 -rn))
+    local sorted_results=()
+    if [[ ${#results[@]} -gt 0 ]]; then
+        sorted_results=($(printf '%s\n' "${results[@]}" | sort -t'|' -k1 -rn))
+    fi
     
     # Format output
     if [[ "$format" == "json" ]]; then
         echo "["
         local first=1
-        for result in "${sorted_results[@]}"; do
+        for result in "${sorted_results[@]+"${sorted_results[@]}"}"; do
             IFS='|' read -r score file line_num tags line_content <<< "$result"
             
             if [[ $first -eq 0 ]]; then
@@ -302,7 +305,7 @@ search_memory() {
     else
         # Text format
         local count=0
-        for result in "${sorted_results[@]}"; do
+        for result in "${sorted_results[@]+"${sorted_results[@]}"}"; do
             IFS='|' read -r score file line_num tags line_content <<< "$result"
             
             count=$((count + 1))
