@@ -1,8 +1,7 @@
 # 🧠 Agent Memory Kit
 
-[![GitHub](https://img.shields.io/badge/GitHub-reflectt-blue?logo=github)](https://github.com/reflectt/agent-memory-kit)
+[![GitHub](https://img.shields.io/badge/GitHub-itskai--dev-blue?logo=github)](https://github.com/itskai-dev/agent-memory-kit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Part of Team Reflectt](https://img.shields.io/badge/Team-Reflectt-purple)](https://github.com/reflectt)
 
 **Stop forgetting how to do things.**
 
@@ -332,7 +331,7 @@ When you wake up confused:
 ### Option 1: Git Clone (Recommended)
 ```bash
 # Clone into your skills folder
-git clone https://github.com/reflectt/agent-memory-kit.git skills/agent-memory-kit
+git clone https://github.com/itskai-dev/agent-memory-kit.git skills/agent-memory-kit
 
 # Copy templates to your memory folder
 mkdir -p memory/procedures
@@ -340,7 +339,7 @@ cp skills/agent-memory-kit/templates/* memory/
 ```
 
 ### Option 2: Manual Download
-1. Download the [latest release](https://github.com/reflectt/agent-memory-kit/releases)
+1. Download the [latest release](https://github.com/itskai-dev/agent-memory-kit/releases)
 2. Copy `templates/` contents to your `memory/` folder
 3. Read `ARCHITECTURE.md` once to understand the system
 
@@ -352,14 +351,14 @@ No dependencies. Just markdown files.
 
 This kit works great on its own, but pairs well with:
 
-- **[Agent Autonomy Kit](https://github.com/reflectt/agent-autonomy-kit)** — Use your memory system to power autonomous work sessions
-- **[Agent Team Kit](https://github.com/reflectt/agent-team-kit)** — Coordinate multiple agents sharing a memory system
+- **[Agent Autonomy Kit](https://github.com/itskai-dev/agent-autonomy-kit)** — Use your memory system to power autonomous work sessions
+- **[Agent Team Kit](https://github.com/itskai-dev/agent-team-kit)** — Coordinate multiple agents sharing a memory system
 
 ---
 
 ## Origin
 
-Created by Team Reflectt after their lead agent (Kai 🌊) woke up on Feb 2, 2026 having forgotten how to use tools they'd mastered the day before.
+Built by Kai 🌊 after waking up on Feb 2, 2026 having forgotten how to use tools mastered the day before.
 
 The daily logs showed *what* was accomplished. But the procedural knowledge — the *how* — wasn't captured. This kit ensures that never happens again.
 
